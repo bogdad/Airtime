@@ -16,7 +16,9 @@ class PluploadController extends Zend_Controller_Action
         global $CC_CONFIG;
         
         $request = $this->getRequest();
-        $baseUrl = $request->getBaseUrl();
+        //$baseUrl = $request->getBaseUrl();
+        $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
+        if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
 
         $this->view->headScript()->appendFile($baseUrl.'/js/plupload/plupload.full.min.js?'.$CC_CONFIG['airtime_version'],'text/javascript');
         $this->view->headScript()->appendFile($baseUrl.'/js/plupload/jquery.plupload.queue.min.js?'.$CC_CONFIG['airtime_version'],'text/javascript');

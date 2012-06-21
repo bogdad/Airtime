@@ -174,7 +174,7 @@ class AirTimeApiClient(ApiClientInterface):
                 response = urllib2.urlopen(url).read()
                 successful_response = True
             except IOError, e:
-                logger.error('Error Authenticating with remote server: %s', e)
+                logger.error('Error Authenticating with remote server: %s %s', e, url)
             except Exception, e:
                 logger.error('Couldn\'t connect to remote server. Is it running?')
                 logger.error("%s" % e)
@@ -188,9 +188,11 @@ class AirTimeApiClient(ApiClientInterface):
 
     def __get_airtime_version(self, verbose = True):
         logger = self.logger
-        url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["version_url"])
+        url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["version_url"])
         logger.debug("Trying to contact %s", url)
         url = url.replace("%%api_key%%", self.config["api_key"])
+        
+        logger.error("%s" % url)
 
         version = -1
         response = None
@@ -245,7 +247,7 @@ class AirTimeApiClient(ApiClientInterface):
         logger = self.logger
 
         # Construct the URL
-        export_url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["export_url"])
+        export_url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["export_url"])
 
         logger.info("Fetching schedule from %s", export_url)
         export_url = export_url.replace('%%api_key%%', self.config["api_key"])
@@ -285,7 +287,7 @@ class AirTimeApiClient(ApiClientInterface):
         response = ''
         try:
             schedule_id = data
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["update_start_playing_url"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["update_start_playing_url"])
             url = url.replace("%%media_id%%", str(media_id))
             url = url.replace("%%schedule_id%%", str(schedule_id))
             logger.debug(url)
@@ -315,7 +317,7 @@ class AirTimeApiClient(ApiClientInterface):
         logger = self.logger
         response = None
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["show_schedule_url"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["show_schedule_url"])
             logger.debug(url)
             url = url.replace("%%api_key%%", self.config["api_key"])
             response = self.get_response_from_server(url)
@@ -336,7 +338,7 @@ class AirTimeApiClient(ApiClientInterface):
         retries = int(self.config["upload_retries"])
         retries_wait = int(self.config["upload_wait"])
 
-        url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["upload_file_url"])
+        url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["upload_file_url"])
 
         logger.debug(url)
         url = url.replace("%%api_key%%", self.config["api_key"])
@@ -367,7 +369,7 @@ class AirTimeApiClient(ApiClientInterface):
         #logger = logging.getLogger()
         response = ''
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["check_live_stream_auth"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["check_live_stream_auth"])
     
             url = url.replace("%%api_key%%", self.config["api_key"])
             url = url.replace("%%username%%", username)
@@ -390,7 +392,7 @@ class AirTimeApiClient(ApiClientInterface):
 
         response = None
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["media_setup_url"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["media_setup_url"])
             url = url.replace("%%api_key%%", self.config["api_key"])
             
             response = self.get_response_from_server(url)
@@ -406,7 +408,7 @@ class AirTimeApiClient(ApiClientInterface):
         logger = self.logger
         response = None
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["update_media_url"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["update_media_url"])
             url = url.replace("%%api_key%%", self.config["api_key"])
             url = url.replace("%%mode%%", mode)
            
@@ -420,7 +422,7 @@ class AirTimeApiClient(ApiClientInterface):
             response = json.loads(response)
 
             if("error" not in response and is_record):
-                url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["upload_recorded"])
+                url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["upload_recorded"])
                 url = url.replace("%%fileid%%", str(response[u'id']))
                 url = url.replace("%%showinstanceid%%", str(md['MDATA_KEY_TRACKNUMBER']))
                 url = url.replace("%%api_key%%", self.config["api_key"])
@@ -444,7 +446,7 @@ class AirTimeApiClient(ApiClientInterface):
     def list_all_db_files(self, dir_id):
         logger = self.logger
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["list_all_db_files"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["list_all_db_files"])
 
             url = url.replace("%%api_key%%", self.config["api_key"])
             url = url.replace("%%dir_id%%", dir_id)
@@ -460,7 +462,7 @@ class AirTimeApiClient(ApiClientInterface):
     def list_all_watched_dirs(self):
         logger = self.logger
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["list_all_watched_dirs"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["list_all_watched_dirs"])
 
             url = url.replace("%%api_key%%", self.config["api_key"])
             
@@ -475,7 +477,7 @@ class AirTimeApiClient(ApiClientInterface):
     def add_watched_dir(self, path):
         logger = self.logger
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["add_watched_dir"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["add_watched_dir"])
 
             url = url.replace("%%api_key%%", self.config["api_key"])
             url = url.replace("%%path%%", base64.b64encode(path))
@@ -491,7 +493,7 @@ class AirTimeApiClient(ApiClientInterface):
     def remove_watched_dir(self, path):
         logger = self.logger
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["remove_watched_dir"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["remove_watched_dir"])
 
             url = url.replace("%%api_key%%", self.config["api_key"])
             url = url.replace("%%path%%", base64.b64encode(path))
@@ -507,7 +509,7 @@ class AirTimeApiClient(ApiClientInterface):
     def set_storage_dir(self, path):
         logger = self.logger
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["set_storage_dir"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["set_storage_dir"])
 
             url = url.replace("%%api_key%%", self.config["api_key"])
             url = url.replace("%%path%%", base64.b64encode(path))
@@ -523,7 +525,7 @@ class AirTimeApiClient(ApiClientInterface):
     def get_stream_setting(self):
         logger = self.logger
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["get_stream_setting"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["get_stream_setting"])
             
             url = url.replace("%%api_key%%", self.config["api_key"])         
             response = self.get_response_from_server(url)
@@ -543,7 +545,7 @@ class AirTimeApiClient(ApiClientInterface):
     def register_component(self, component):
         logger = self.logger
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["register_component"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["register_component"])
             
             url = url.replace("%%api_key%%", self.config["api_key"])
             url = url.replace("%%component%%", component)
@@ -554,7 +556,7 @@ class AirTimeApiClient(ApiClientInterface):
     def notify_liquidsoap_status(self, msg, stream_id, time):
         logger = self.logger
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["update_liquidsoap_status"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["update_liquidsoap_status"])
             
             url = url.replace("%%api_key%%", self.config["api_key"])
             msg = msg.replace('/', ' ')
@@ -570,7 +572,7 @@ class AirTimeApiClient(ApiClientInterface):
     def notify_source_status(self, sourcename, status):
         logger = self.logger
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["update_source_status"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["update_source_status"])
             
             url = url.replace("%%api_key%%", self.config["api_key"])
             url = url.replace("%%sourcename%%", sourcename)
@@ -586,7 +588,7 @@ class AirTimeApiClient(ApiClientInterface):
     def update_file_system_mount(self, added_dir, removed_dir):
         logger = self.logger
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["update_fs_mount"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["update_fs_mount"])
             
             url = url.replace("%%api_key%%", self.config["api_key"])
 
@@ -614,7 +616,7 @@ class AirTimeApiClient(ApiClientInterface):
     def handle_watched_dir_missing(self, dir):
         logger = self.logger
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["handle_watched_dir_missing"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["handle_watched_dir_missing"])
             
             url = url.replace("%%api_key%%", self.config["api_key"])
             url = url.replace("%%dir%%", base64.b64encode(dir))
@@ -633,7 +635,7 @@ class AirTimeApiClient(ApiClientInterface):
     def get_bootstrap_info(self):
         logger = self.logger
         try:
-            url = "http://%s:%s/%s/%s" % (self.config["base_url"], str(self.config["base_port"]), self.config["api_base"], self.config["get_bootstrap_info"])
+            url = "http://%s:%s/%s/%s/%s" % (self.config["host"], str(self.config["base_port"]), self.config["base_dir"], self.config["api_base"], self.config["get_bootstrap_info"])
             
             url = url.replace("%%api_key%%", self.config["api_key"])
             

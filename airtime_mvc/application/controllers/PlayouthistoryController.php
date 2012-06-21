@@ -15,7 +15,9 @@ class PlayoutHistoryController extends Zend_Controller_Action
 		global $CC_CONFIG;
 		
 		$request = $this->getRequest();
-        $baseUrl = $request->getBaseUrl();
+        //$baseUrl = $request->getBaseUrl();
+        $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
+        if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
 
         //default time is the last 24 hours.
         $now = time();

@@ -66,7 +66,7 @@ var AIRTIME = (function(AIRTIME){
 
 		var span = $(this),
 			id = span.parent().attr("id").split("_").pop(),
-			url = "/Playlist/set-cue",
+			url = baseUrl+"/Playlist/set-cue",
 			cueIn = $.trim(span.text()),
 			li = span.parents("li"),
 			unqid = li.attr("unqid"),
@@ -104,7 +104,7 @@ var AIRTIME = (function(AIRTIME){
 
 		var span = $(this),
 			id = span.parent().attr("id").split("_").pop(),
-			url = "/Playlist/set-cue",
+			url = baseUrl+"/Playlist/set-cue",
 			cueOut = $.trim(span.text()),
 			li = span.parents("li"),
 			unqid = li.attr("unqid"),
@@ -142,7 +142,7 @@ var AIRTIME = (function(AIRTIME){
 
 		var span = $(this),
 			id = span.parent().attr("id").split("_").pop(),
-			url = "/Playlist/set-fade",
+			url = baseUrl+"/Playlist/set-fade",
 			fadeIn = $.trim(span.text()),
 			li = span.parents("li"),
 			unqid = li.attr("unqid"),
@@ -179,7 +179,7 @@ var AIRTIME = (function(AIRTIME){
 
 		var span = $(this),
 			id = span.parent().attr("id").split("_").pop(),
-			url = "/Playlist/set-fade",
+			url = baseUrl+"/Playlist/set-fade",
 			fadeOut = $.trim(span.text()),
 			li = span.parents("li"),
 			unqid = li.attr("unqid"),
@@ -258,7 +258,7 @@ var AIRTIME = (function(AIRTIME){
 	    var nameElement = $(this),
 	    	lastMod = getModified();
 
-    	url = '/Playlist/set-playlist-name';
+    	url = baseUrl+'/Playlist/set-playlist-name';
 
 	    $.post(url, 
 	    	{format: "json", name: nameElement.text(), modified: lastMod}, 
@@ -381,7 +381,7 @@ var AIRTIME = (function(AIRTIME){
 	        else {
 	            $(this).addClass("ui-state-active");
 
-	            var url = '/Playlist/get-playlist-fades';
+	            var url = baseUrl+'/Playlist/get-playlist-fades';
 
 		        $.get(url, 
 		        	{format: "json", modified: lastMod}, 
@@ -407,7 +407,7 @@ var AIRTIME = (function(AIRTIME){
 		$pl.on("blur", "span.spl_main_fade_in", function(event){
 	        event.stopPropagation();
 
-		    var url = "/Playlist/set-playlist-fades",
+		    var url = baseUrl+"/Playlist/set-playlist-fades",
 			    span = $(this),
 			    fadeIn = $.trim(span.text()), 
 			    lastMod = getModified();
@@ -430,7 +430,7 @@ var AIRTIME = (function(AIRTIME){
 		$pl.on("blur", "span.spl_main_fade_out", function(event){
 	        event.stopPropagation();
 
-		    var url = "/Playlist/set-playlist-fades",
+		    var url = baseUrl+"/Playlist/set-playlist-fades",
 		    	span = $(this),
 		    	fadeOut = $.trim(span.text()), 
 		    	lastMod = getModified();
@@ -481,7 +481,7 @@ var AIRTIME = (function(AIRTIME){
 	        	url,
 	        	lastMod = getModified();;
 	        
-	        url = '/Playlist/set-playlist-description';
+	        url = baseUrl+'/Playlist/set-playlist-description';
 
 	        $.post(url, 
         		{format: "json", description: description, modified: lastMod}, 
@@ -601,7 +601,7 @@ var AIRTIME = (function(AIRTIME){
 	}
 	
 	mod.fnNew = function() {
-		var url = '/Playlist/new';
+		var url = baseUrl+'/Playlist/new';
 
 		stopAudioPreview();
 		
@@ -614,7 +614,7 @@ var AIRTIME = (function(AIRTIME){
 	};
 	
 	mod.fnEdit = function(id) {
-		var url = '/Playlist/edit';;
+		var url = baseUrl+'/Playlist/edit';;
 		
 		stopAudioPreview();	
 		
@@ -631,7 +631,7 @@ var AIRTIME = (function(AIRTIME){
 		stopAudioPreview();	
 		id = (plid === undefined) ? getId() : plid;
 		lastMod = getModified(); 
-		url = '/Playlist/delete';
+		url = baseUrl+'/Playlist/delete';
 
 		$.post(url, 
 			{format: "json", ids: id, modified: lastMod}, 
@@ -696,21 +696,21 @@ var AIRTIME = (function(AIRTIME){
 	}
 	
 	mod.fnAddItems = function(aItems, iAfter, sAddType) {
-		var sUrl = "/playlist/add-items";
+		var sUrl = baseUrl+"/playlist/add-items";
 			oData = {"ids": aItems, "afterItem": iAfter, "type": sAddType};
 		
 		playlistRequest(sUrl, oData);
 	};
 	
 	mod.fnMoveItems = function(aIds, iAfter) {
-		var sUrl = "/playlist/move-items",
+		var sUrl = baseUrl+"/playlist/move-items",
 			oData = {"ids": aIds, "afterItem": iAfter};
 		
 		playlistRequest(sUrl, oData);
 	};
 	
 	mod.fnDeleteItems = function(aItems) {
-		var sUrl = "/playlist/delete-items",
+		var sUrl = baseUrl+"/playlist/delete-items",
 			oData = {"ids": aItems};
 		
 		playlistRequest(sUrl, oData);

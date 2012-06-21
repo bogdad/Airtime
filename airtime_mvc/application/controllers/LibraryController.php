@@ -29,12 +29,16 @@ class LibraryController extends Zend_Controller_Action
 
     public function contextMenuAction()
     {
+		global $CC_CONFIG;
         $id = $this->_getParam('id');
         $type = $this->_getParam('type');
         //playlist||timeline
         $screen = $this->_getParam('screen');
         $request = $this->getRequest();
-        $baseUrl = $request->getBaseUrl();
+        //$baseUrl = $request->getBaseUrl();
+        $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
+        if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
+        
         $menu = array();
 
         $userInfo = Zend_Auth::getInstance()->getStorage()->read();
@@ -57,8 +61,8 @@ class LibraryController extends Zend_Controller_Action
                 }
             }
             if ($isAdminOrPM) {
-                $menu["del"] = array("name"=> "Delete", "icon" => "delete", "url" => "/library/delete");
-                $menu["edit"] = array("name"=> "Edit Metadata", "icon" => "edit", "url" => "/library/edit-file-md/id/{$id}");
+                $menu["del"] = array("name"=> "Delete", "icon" => "delete", "url" => $CC_CONFIG['base']."/library/delete");
+                $menu["edit"] = array("name"=> "Edit Metadata", "icon" => "edit", "url" => $CC_CONFIG['base']."/library/edit-file-md/id/{$id}");
             }
 
             $url = $file->getRelativeFileUrl($baseUrl).'/download/true';
@@ -72,7 +76,7 @@ class LibraryController extends Zend_Controller_Action
                 }
             }
             if($isAdminOrPM || $playlist->getCreatorId() == $user->getId()){
-                $menu["del"] = array("name"=> "Delete", "icon" => "delete", "url" => "/library/delete");
+                $menu["del"] = array("name"=> "Delete", "icon" => "delete", "url" => $CC_CONFIG['base']."/library/delete");
             }
         }
 
@@ -100,7 +104,7 @@ class LibraryController extends Zend_Controller_Action
                 $text = "Upload to SoundCloud";
             }
         
-            $menu["soundcloud"]["items"]["upload"] = array("name" => $text, "icon" => "soundcloud", "url" => "/library/upload-file-soundcloud/id/{$id}");
+            $menu["soundcloud"]["items"]["upload"] = array("name" => $text, "icon" => "soundcloud", "url" => $CC_CONFIG['base']."/library/upload-file-soundcloud/id/{$id}");
         }
             
         $this->view->items = $menu;

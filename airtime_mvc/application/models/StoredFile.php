@@ -619,6 +619,7 @@ Logging::log("getting media! - 2");
     }
 
     public static function searchLibraryFiles($datatables) {
+		global $CC_CONFIG;
 
     	$con = Propel::getConnection(CcFilesPeer::DATABASE_NAME);
 
@@ -720,13 +721,13 @@ Logging::log("getting media! - 2");
             //TODO url like this to work on both playlist/showbuilder screens.
             //datatable stuff really needs to be pulled out and generalized within the project
             //access to zend view methods to access url helpers is needed.
-
+Logging::log($CC_CONFIG);
             if($type == "au"){//&& isset( $audioResults )) {
                 $row['audioFile'] = $row['gunid'].".".pathinfo($row['filepath'], PATHINFO_EXTENSION);
-                $row['image'] = '<img title="Track preview" src="/css/images/icon_audioclip.png">';
+                $row['image'] = '<img title="Track preview" src="'.$CC_CONFIG['base'].'/css/images/icon_audioclip.png">';
             }
             else {
-                $row['image'] = '<img title="Playlist preview" src="/css/images/icon_playlist.png">';
+                $row['image'] = '<img title="Playlist preview" src="'.$CC_CONFIG['base'].'/css/images/icon_playlist.png">';
             }
         }
 

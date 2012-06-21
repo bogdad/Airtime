@@ -22,7 +22,9 @@ class LoginController extends Zend_Controller_Action
         
         $error = false;
         $request = $this->getRequest();
-        $baseUrl = $request->getBaseUrl();
+        //$baseUrl = $request->getBaseUrl();
+        $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
+        if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
         
         $this->view->headScript()->appendFile($baseUrl.'/js/airtime/login/login.js?'.$CC_CONFIG['airtime_version'],'text/javascript');
         

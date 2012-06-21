@@ -451,13 +451,13 @@ class Application_Model_Preference
     	$outputArray['STATION_COUNTRY'] = self::GetStationCountry();
     	$outputArray['STATION_CITY'] = self::GetStationCity();
     	$outputArray['STATION_DESCRIPTION'] = self::GetStationDescription();
-
+    	
     	// get web server info
     	if(isset($systemInfoArray["AIRTIME_VERSION_URL"])){
     	   $url = $systemInfoArray["AIRTIME_VERSION_URL"];
            $index = strpos($url,'/api/');
            $url = substr($url, 0, $index);
-
+           
            $headerInfo = get_headers(trim($url),1);
            $outputArray['WEB_SERVER'] = $headerInfo['Server'][0];
     	}

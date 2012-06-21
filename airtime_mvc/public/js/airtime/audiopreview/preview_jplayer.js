@@ -72,7 +72,7 @@ function playAllPlaylist(p_playlistID, p_playlistIndex) {
     if ( _idToPostionLookUp !== undefined && viewsPlaylistID == p_playlistID ) {
         play(p_playlistIndex);
     }else {
-        buildplaylist("/audiopreview/get-playlist/playlistID/"+p_playlistID, p_playlistIndex);
+        buildplaylist(baseUrl+baseDir+"audiopreview/get-playlist/playlistID/"+p_playlistID, p_playlistIndex);
     }
 }
 
@@ -90,7 +90,7 @@ function playAllShow(p_showID, p_index) {
     if ( _idToPostionLookUp !== undefined && viewsShowID == p_showID ) {
         play(p_index);
     }else {
-        buildplaylist("/audiopreview/get-show/showID/"+p_showID, p_index);
+        buildplaylist(baseUrl+"/audiopreview/get-show/showID/"+p_showID, p_index);
     }
 }
 
@@ -112,12 +112,12 @@ function buildplaylist(p_url, p_playIndex) {
             if (data[index]['element_mp3'] != undefined){
                 media = {title: data[index]['element_title'],
                         artist: data[index]['element_artist'],
-                        mp3:"/api/get-media/file/"+data[index]['element_mp3']
+                        mp3:baseUrl+"/api/get-media/file/"+data[index]['element_mp3']
                 };
             }else if (data[index]['element_oga'] != undefined) {
                 media = {title: data[index]['element_title'],
                         artist: data[index]['element_artist'],
-                        oga:"/api/get-media/file/"+data[index]['element_oga']
+                        oga:baseUrl+"/api/get-media/file/"+data[index]['element_oga']
                 };
             }
             myPlaylist[index] = media;
@@ -170,12 +170,12 @@ function playOne(p_audioFileID) {
     if (fileExtension.toLowerCase() === 'mp3') {
         media = {title: $('.audioFileTitle').text() !== 'null' ?$('.audioFileTitle').text():"",
             artist: $('.audioFileArtist').text() !== 'null' ?$('.audioFileArtist').text():"",
-            mp3:"/api/get-media/file/"+p_audioFileID
+            mp3:baseUrl+"/api/get-media/file/"+p_audioFileID
         };
     }else if (fileExtension.toLowerCase() === 'ogg' ) {
         media = {title: $('.audioFileTitle').text() != 'null' ?$('.audioFileTitle').text():"",
             artist: $('.audioFileArtist').text() != 'null' ?$('.audioFileArtist').text():"",
-            oga:"/api/get-media/file/"+p_audioFileID
+            oga:baseUrl+"/api/get-media/file/"+p_audioFileID
         };
     }
     _playlist_jplayer.option("autoPlay", true);

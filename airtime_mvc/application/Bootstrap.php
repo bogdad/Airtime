@@ -42,15 +42,42 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view = $this->getResource('view');
         $view->doctype('XHTML1_STRICT');
     }
+    
+    protected function _initGlobals()
+    {
+        $view = $this->getResource('view');
+        $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
+        if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
+        
+	    $view->headScript()->appendScript("var baseUrl = '$baseUrl'");
+                                               
+        $user = Application_Model_User::GetCurrentUser();
+        if (!is_null($user)){
+            $userType = $user->getType();
+        } else {
+            $userType = "";
+        }
+        $view->headScript()->appendScript("var userType = '$userType';");
+        
+        
+        if (Application_Model_Preference::GetPlanLevel() != "disabled"
+                && !($_SERVER['SCRIPT_NAME'] == '/Dashboard/stream-player' || $_SERVER['SCRIPT_NAME'] == '/audiopreview/audio-preview-player')) {
+            $client_id = Application_Model_Preference::GetClientId();
+            $view->headScript()->appendScript("var livechat_client_id = '$client_id';");
+        }
+        	
+	}
 
     protected function _initHeadLink()
     {
         global $CC_CONFIG;
 
         $view = $this->getResource('view');
-        $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-        $baseDir = dirname($_SERVER['SCRIPT_FILENAME']);
-
+        //$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+        $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
+        if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
+        $CC_CONFIG['base'] = $baseUrl;
+        
         $view->headLink()->appendStylesheet($baseUrl.'/css/redmond/jquery-ui-1.8.8.custom.css?'.$CC_CONFIG['airtime_version']);
         $view->headLink()->appendStylesheet($baseUrl.'/css/pro_dropdown_3.css?'.$CC_CONFIG['airtime_version']);
         $view->headLink()->appendStylesheet($baseUrl.'/css/qtip/jquery.qtip.min.css?'.$CC_CONFIG['airtime_version']);
@@ -63,16 +90,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         global $CC_CONFIG;
 
         $view = $this->getResource('view');
-        $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-        $baseDir = dirname($_SERVER['SCRIPT_FILENAME']);
-
+        //$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+        $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
+        if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
+        		
         $view->headScript()->appendFile($baseUrl.'/js/libs/jquery-1.7.2.min.js?'.$CC_CONFIG['airtime_version'],'text/javascript');
         $view->headScript()->appendFile($baseUrl.'/js/libs/jquery-ui-1.8.18.custom.min.js?'.$CC_CONFIG['airtime_version'],'text/javascript');
         $view->headScript()->appendFile($baseUrl.'/js/libs/jquery.stickyPanel.js?'.$CC_CONFIG['airtime_version'],'text/javascript');
         $view->headScript()->appendFile($baseUrl.'/js/qtip/jquery.qtip.js?'.$CC_CONFIG['airtime_version'],'text/javascript');
         $view->headScript()->appendFile($baseUrl.'/js/jplayer/jquery.jplayer.min.js?'.$CC_CONFIG['airtime_version'], 'text/javascript');
         $view->headScript()->appendFile($baseUrl.'/js/sprintf/sprintf-0.7-beta1.js?'.$CC_CONFIG['airtime_version'],'text/javascript');
-        $view->headScript()->appendScript("var baseUrl='$baseUrl/'");
 
         //scripts for now playing bar
         $view->headScript()->appendFile($baseUrl.'/js/airtime/dashboard/helperfunctions.js?'.$CC_CONFIG['airtime_version'],'text/javascript');
@@ -82,17 +109,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $view->headScript()->appendFile($baseUrl.'/js/airtime/common/common.js?'.$CC_CONFIG['airtime_version'],'text/javascript');
 
-        $user = Application_Model_User::GetCurrentUser();
-        if (!is_null($user)){
-            $userType = $user->getType();
-        } else {
-            $userType = "";
-        }
-        $view->headScript()->appendScript("var userType = '$userType';");
         if (Application_Model_Preference::GetPlanLevel() != "disabled"
-                && !($_SERVER['REQUEST_URI'] == '/Dashboard/stream-player' || $_SERVER['REQUEST_URI'] == '/audiopreview/audio-preview-player')) {
+                && !($_SERVER['SCRIPT_NAME'] == '/Dashboard/stream-player' || $_SERVER['SCRIPT_NAME'] == '/audiopreview/audio-preview-player')) {
             $client_id = Application_Model_Preference::GetClientId();
-            $view->headScript()->appendScript("var livechat_client_id = '$client_id';");
             $view->headScript()->appendFile($baseUrl . '/js/airtime/common/livechat.js?'.$CC_CONFIG['airtime_version'], 'text/javascript');
         }
         if(isset($CC_CONFIG['demo']) && $CC_CONFIG['demo'] == 1){

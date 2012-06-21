@@ -204,7 +204,7 @@ function audioStream(){
         ready: function () {
             $(this).jPlayer("setMedia", media).jPlayer("play");
         },
-        swfPath: "/js/jplayer",
+        swfPath: baseUrl+"/js/jplayer",
         supplied: supplied
     });
 }

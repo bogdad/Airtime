@@ -21,7 +21,10 @@ class ShowbuilderController extends Zend_Controller_Action
         global $CC_CONFIG;
         
         $request = $this->getRequest();
-        $baseUrl = $request->getBaseUrl();
+        //$baseUrl = $request->getBaseUrl();
+        $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
+        if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
+        
         $user = Application_Model_User::GetCurrentUser();
         
         $userType = $user->getType();
@@ -63,7 +66,8 @@ class ShowbuilderController extends Zend_Controller_Action
         $this->view->headLink()->appendStylesheet($baseUrl.'/css/datatables/css/ColVis.css?'.$CC_CONFIG['airtime_version']);
         $this->view->headLink()->appendStylesheet($baseUrl.'/css/datatables/css/ColReorder.css?'.$CC_CONFIG['airtime_version']);
         
-        $this->view->headScript()->appendFile($this->view->baseUrl('/js/airtime/library/events/library_showbuilder.js?'.$CC_CONFIG['airtime_version']),'text/javascript');
+        //$this->view->headScript()->appendFile($this->view->baseUrl('/js/airtime/library/events/library_showbuilder.js?'.$CC_CONFIG['airtime_version']),'text/javascript');
+        $this->view->headScript()->appendFile($baseUrl.'/js/airtime/library/events/library_showbuilder.js?'.$CC_CONFIG['airtime_version'],'text/javascript');
          
         $refer_sses = new Zend_Session_Namespace('referrer');
         
@@ -177,11 +181,15 @@ class ShowbuilderController extends Zend_Controller_Action
     
     public function contextMenuAction()
     {
+		global $CC_CONFIG;
         $id = $this->_getParam('id');
         $now = floatval(microtime(true));
     
         $request = $this->getRequest();
-        $baseUrl = $request->getBaseUrl();
+        //$baseUrl = $request->getBaseUrl();
+        $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
+        if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
+        
         $menu = array();
     
         $user = Application_Model_User::GetCurrentUser();
@@ -197,7 +205,7 @@ class ShowbuilderController extends Zend_Controller_Action
         if ($now < floatval($item->getDbEnds("U.u")) && $user->canSchedule($instance->getDbShowId())) {
     
             //remove/truncate the item from the schedule
-            $menu["del"] = array("name"=> "Delete", "icon" => "delete", "url" => "/showbuilder/schedule-remove");
+            $menu["del"] = array("name"=> "Delete", "icon" => "delete", "url" => $CC_CONFIG['base']."/showbuilder/schedule-remove");
         }
     
         $this->view->items = $menu;
