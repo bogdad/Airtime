@@ -12,6 +12,8 @@ class LoginController extends Zend_Controller_Action
     {
         global $CC_CONFIG;
         
+        $request = $this->getRequest();
+        
         if (Zend_Auth::getInstance()->hasIdentity())
         {
             $this->_redirect('Showbuilder');
