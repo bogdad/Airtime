@@ -25,8 +25,6 @@ class AudiopreviewController extends Zend_Controller_Action
         $audioFileArtist = $this->_getParam('audioFileArtist');
         $audioFileTitle = $this->_getParam('audioFileTitle');
         
-        $request = $this->getRequest();
-        //$baseUrl = $request->getBaseUrl();
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
 
@@ -59,8 +57,6 @@ class AudiopreviewController extends Zend_Controller_Action
         $playlistIndex = $this->_getParam('playlistIndex');
         $playlistID = $this->_getParam('playlistID');
 
-        $request = $this->getRequest();
-        //$baseUrl = $request->getBaseUrl();
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
         
@@ -129,9 +125,7 @@ class AudiopreviewController extends Zend_Controller_Action
         
         $showID = $this->_getParam('showID');
         $showIndex = $this->_getParam('showIndex');
-        
-        $request = $this->getRequest();
-        //$baseUrl = $request->getBaseUrl();
+
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
 

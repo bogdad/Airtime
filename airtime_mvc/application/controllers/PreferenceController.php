@@ -24,8 +24,6 @@ class PreferenceController extends Zend_Controller_Action
         
         $isSaas = Application_Model_Preference::GetPlanLevel() == 'disabled'?false:true;
         
-        $request = $this->getRequest();
-        //$baseUrl = $request->getBaseUrl();
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
 
@@ -74,8 +72,6 @@ class PreferenceController extends Zend_Controller_Action
     {
         global $CC_CONFIG;
 
-        $request = $this->getRequest();
-        //$baseUrl = $request->getBaseUrl();
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
 
@@ -137,8 +133,6 @@ class PreferenceController extends Zend_Controller_Action
         global $CC_CONFIG;
 
         if(Application_Model_Preference::GetPlanLevel() == 'disabled'){
-            $request = $this->getRequest();
-            //$baseUrl = $request->getBaseUrl();
             $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
             if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
 
@@ -155,8 +149,6 @@ class PreferenceController extends Zend_Controller_Action
     {
         global $CC_CONFIG;
 
-        $request = $this->getRequest();
-        //$baseUrl = $request->getBaseUrl();
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
 

@@ -21,8 +21,6 @@ class UserController extends Zend_Controller_Action
     {
         global $CC_CONFIG;
         
-        $request = $this->getRequest();
-        //$baseUrl = $request->getBaseUrl();
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
         

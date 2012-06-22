@@ -34,8 +34,7 @@ class LibraryController extends Zend_Controller_Action
         $type = $this->_getParam('type');
         //playlist||timeline
         $screen = $this->_getParam('screen');
-        $request = $this->getRequest();
-        //$baseUrl = $request->getBaseUrl();
+        
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
         

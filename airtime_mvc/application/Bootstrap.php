@@ -49,7 +49,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
         
-	    $view->headScript()->appendScript("var baseUrl = '$baseUrl'");
+        $view->headScript()->appendScript("var baseUrl = '$baseUrl'");
                                                
         $user = Application_Model_User::GetCurrentUser();
         if (!is_null($user)){
@@ -58,15 +58,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $userType = "";
         }
         $view->headScript()->appendScript("var userType = '$userType';");
-        	
-	}
+            
+    }
 
     protected function _initHeadLink()
     {
         global $CC_CONFIG;
 
         $view = $this->getResource('view');
-        //$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+        
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
         $CC_CONFIG['base_dir'] = $baseUrl;
@@ -83,10 +83,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         global $CC_CONFIG;
 
         $view = $this->getResource('view');
-        //$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+        
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
-        		
+                
         $view->headScript()->appendFile($baseUrl.'/js/libs/jquery-1.7.2.min.js?'.$CC_CONFIG['airtime_version'],'text/javascript');
         $view->headScript()->appendFile($baseUrl.'/js/libs/jquery-ui-1.8.18.custom.min.js?'.$CC_CONFIG['airtime_version'],'text/javascript');
         $view->headScript()->appendFile($baseUrl.'/js/libs/jquery.stickyPanel.js?'.$CC_CONFIG['airtime_version'],'text/javascript');
@@ -105,7 +105,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         if (Application_Model_Preference::GetPlanLevel() != "disabled"
                 && !($_SERVER['REQUEST_URI'] == $baseUrl.'/Dashboard/stream-player' || 
                      strncmp($_SERVER['REQUEST_URI'], $baseUrl.'/audiopreview/audio-preview', strlen($baseUrl.'/audiopreview/audio-preview'))==0)) {
-			$client_id = Application_Model_Preference::GetClientId();
+            $client_id = Application_Model_Preference::GetClientId();
             $view->headScript()->appendScript("var livechat_client_id = '$client_id';");
             $view->headScript()->appendFile($baseUrl . '/js/airtime/common/livechat.js?'.$CC_CONFIG['airtime_version'], 'text/javascript');
         }
@@ -148,7 +148,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initRouter()
     {
-    	$front = Zend_Controller_Front::getInstance();
+        $front = Zend_Controller_Front::getInstance();
         $router = $front->getRouter();
 
         $router->addRoute(

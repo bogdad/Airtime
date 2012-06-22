@@ -6,7 +6,7 @@ class Application_Form_Preferences extends Zend_Form
 
     public function init()
     {
-		global $CC_CONFIG;
+        global $CC_CONFIG;
 		
         $this->setAction($CC_CONFIG['base_dir'] . '/Preference');
         $this->setMethod('post');

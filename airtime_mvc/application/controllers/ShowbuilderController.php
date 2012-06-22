@@ -20,8 +20,6 @@ class ShowbuilderController extends Zend_Controller_Action
         
         global $CC_CONFIG;
         
-        $request = $this->getRequest();
-        //$baseUrl = $request->getBaseUrl();
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
         
@@ -181,12 +179,10 @@ class ShowbuilderController extends Zend_Controller_Action
     
     public function contextMenuAction()
     {
-		global $CC_CONFIG;
+        global $CC_CONFIG;
         $id = $this->_getParam('id');
         $now = floatval(microtime(true));
     
-        $request = $this->getRequest();
-        //$baseUrl = $request->getBaseUrl();
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
         

@@ -192,8 +192,6 @@ class AirTimeApiClient(ApiClientInterface):
         logger.debug("Trying to contact %s", url)
         url = url.replace("%%api_key%%", self.config["api_key"])
         
-        logger.error("%s" % url)
-
         version = -1
         response = None
         try:

@@ -40,9 +40,6 @@ class ScheduleController extends Zend_Controller_Action
     public function indexAction()
     {
         global $CC_CONFIG;
-
-        $request = $this->getRequest();
-        //$baseUrl = $request->getBaseUrl();
         
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
@@ -211,7 +208,7 @@ class ScheduleController extends Zend_Controller_Action
 
     public function makeContextMenuAction()
     {
-		global $CC_CONFIG;
+        global $CC_CONFIG;
         $id = $this->_getParam('id');
         $menu = array();
         $epochNow = time();

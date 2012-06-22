@@ -21,8 +21,7 @@ class LoginController extends Zend_Controller_Action
         $this->_helper->layout->setLayout('login');
         
         $error = false;
-        $request = $this->getRequest();
-        //$baseUrl = $request->getBaseUrl();
+        
         $baseUrl = dirname($_SERVER['SCRIPT_NAME']);
         if (strcmp($baseUrl, '/') ==0) $baseUrl = "";
         
