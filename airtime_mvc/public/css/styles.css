@@ -1622,6 +1622,10 @@ div.errors{
 }
 .gray-logo {
 	margin:5px 0 0 20px;
+	background:url(images/big_gray_logo.png);
+	width:287px;
+	height:109px;
+	
 }
 .formrow-repeat {
 	list-style-type:none;

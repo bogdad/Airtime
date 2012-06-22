@@ -112,7 +112,7 @@ class DashboardController extends Zend_Controller_Action
         if($logo){
             $this->view->logo = "data:image/png;base64,$logo";
         } else {
-            $this->view->logo = "$baseUrl/css/images/airtime_logo_jp.png";
+            $this->view->logo = $baseUrl."/css/images/airtime_logo_jp.png";
         }
     }
 

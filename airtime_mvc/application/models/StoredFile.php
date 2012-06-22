@@ -724,10 +724,10 @@ Logging::log("getting media! - 2");
 Logging::log($CC_CONFIG);
             if($type == "au"){//&& isset( $audioResults )) {
                 $row['audioFile'] = $row['gunid'].".".pathinfo($row['filepath'], PATHINFO_EXTENSION);
-                $row['image'] = '<img title="Track preview" src="'.$CC_CONFIG['base'].'/css/images/icon_audioclip.png">';
+                $row['image'] = '<img title="Track preview" src="'.$CC_CONFIG['base_dir'].'/css/images/icon_audioclip.png">';
             }
             else {
-                $row['image'] = '<img title="Playlist preview" src="'.$CC_CONFIG['base'].'/css/images/icon_playlist.png">';
+                $row['image'] = '<img title="Playlist preview" src="'.$CC_CONFIG['base_dir'].'/css/images/icon_playlist.png">';
             }
         }
 

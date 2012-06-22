@@ -8,7 +8,7 @@ class Application_Form_Preferences extends Zend_Form
     {
 		global $CC_CONFIG;
 		
-        $this->setAction($CC_CONFIG['base'] . '/Preference');
+        $this->setAction($CC_CONFIG['base_dir'] . '/Preference');
         $this->setMethod('post');
         
         $isSaas = Application_Model_Preference::GetPlanLevel() == 'disabled'?false:true;

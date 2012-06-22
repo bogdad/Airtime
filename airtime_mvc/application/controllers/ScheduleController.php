@@ -237,7 +237,7 @@ class ScheduleController extends Zend_Controller_Action
             $fileId = $file->getId();
             
             $menu["view_recorded"] = array("name" => "View Recorded File Metadata", "icon" => "overview",
-                    "url" => $CC_CONFIG['base']."/library/edit-file-md/id/".$fileId);
+                    "url" => $CC_CONFIG['base_dir']."/library/edit-file-md/id/".$fileId);
         }
 
         if ($epochNow < $showStartLocalDT->getTimestamp()) {
@@ -246,16 +246,16 @@ class ScheduleController extends Zend_Controller_Action
                 && !$instance->isRebroadcast()) {
 
                 $menu["schedule"] = array("name"=> "Add / Remove Content", "icon" => "add-remove-content",
-                    "url" => $CC_CONFIG['base']."/showbuilder/builder-dialog/");
+                    "url" => $CC_CONFIG['base_dir']."/showbuilder/builder-dialog/");
 
                 $menu["clear"] = array("name"=> "Remove All Content", "icon" => "remove-all-content",
-                    "url" => $CC_CONFIG['base']."/schedule/clear-show");
+                    "url" => $CC_CONFIG['base_dir']."/schedule/clear-show");
             }
         }
 
         if (!$instance->isRecorded()) {
 
-            $menu["content"] = array("name"=> "Show Content", "icon" => "overview", "url" => $CC_CONFIG['base']."/schedule/show-content-dialog");
+            $menu["content"] = array("name"=> "Show Content", "icon" => "overview", "url" => $CC_CONFIG['base_dir']."/schedule/show-content-dialog");
         }
 
         if ($showEndLocalDT->getTimestamp() <= $epochNow
@@ -284,7 +284,7 @@ class ScheduleController extends Zend_Controller_Action
             else {
 
                 if (!$instance->isRebroadcast()) {
-                    $menu["edit"] = array("name"=> "Edit Show", "icon" => "edit", "_type"=>"all", "url" => $CC_CONFIG['base']."/Schedule/populate-show-form");
+                    $menu["edit"] = array("name"=> "Edit Show", "icon" => "edit", "_type"=>"all", "url" => $CC_CONFIG['base_dir']."/Schedule/populate-show-form");
                 }
 
                 $menu["cancel"] = array("name"=> "Cancel Current Show", "icon" => "delete");
@@ -294,7 +294,7 @@ class ScheduleController extends Zend_Controller_Action
         if ($epochNow < $showStartLocalDT->getTimestamp()) {
 
                 if (!$instance->isRebroadcast() && $isAdminOrPM) {
-                    $menu["edit"] = array("name"=> "Edit Show", "icon" => "edit", "_type"=>"all", "url" => $CC_CONFIG['base']."/Schedule/populate-show-form");
+                    $menu["edit"] = array("name"=> "Edit Show", "icon" => "edit", "_type"=>"all", "url" => $CC_CONFIG['base_dir']."/Schedule/populate-show-form");
                 }
 
                 if ($instance->getShow()->isRepeating() && $isAdminOrPM) {
@@ -302,13 +302,13 @@ class ScheduleController extends Zend_Controller_Action
                     //create delete sub menu.
                     $menu["del"] = array("name"=> "Delete", "icon" => "delete", "items" => array());
 
-                    $menu["del"]["items"]["single"] = array("name"=> "Delete This Instance", "icon" => "delete", "url" => $CC_CONFIG['base']."/schedule/delete-show");
+                    $menu["del"]["items"]["single"] = array("name"=> "Delete This Instance", "icon" => "delete", "url" => $CC_CONFIG['base_dir']."/schedule/delete-show");
 
-                    $menu["del"]["items"]["following"] = array("name"=> "Delete This Instance and All Following", "icon" => "delete", "url" => $CC_CONFIG['base']."/schedule/cancel-show");
+                    $menu["del"]["items"]["following"] = array("name"=> "Delete This Instance and All Following", "icon" => "delete", "url" => $CC_CONFIG['base_dir']."/schedule/cancel-show");
                 }
                 else if ($isAdminOrPM){
 
-                    $menu["del"] = array("name"=> "Delete", "icon" => "delete", "url" => $CC_CONFIG['base']."/schedule/delete-show");
+                    $menu["del"] = array("name"=> "Delete", "icon" => "delete", "url" => $CC_CONFIG['base_dir']."/schedule/delete-show");
                 }
         }
 
