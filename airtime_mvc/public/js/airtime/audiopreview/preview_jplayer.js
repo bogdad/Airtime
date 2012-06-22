@@ -72,7 +72,7 @@ function playAllPlaylist(p_playlistID, p_playlistIndex) {
     if ( _idToPostionLookUp !== undefined && viewsPlaylistID == p_playlistID ) {
         play(p_playlistIndex);
     }else {
-        buildplaylist(baseUrl+baseDir+"audiopreview/get-playlist/playlistID/"+p_playlistID, p_playlistIndex);
+        buildplaylist(baseUrl+"/audiopreview/get-playlist/playlistID/"+p_playlistID, p_playlistIndex);
     }
 }
 
